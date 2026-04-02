@@ -26,24 +26,22 @@ public class TeacherService {
     @Transactional
     public Teacher create(Teacher teacher) {
         teacher.setId(null);
-        return teacherDao.save(teacher);
+        return teacherDao.insert(teacher);
     }
 
     @Transactional
     public Optional<Teacher> update(Long id, Teacher data) {
-        return teacherDao.findById(id).map(existing -> {
-            existing.setName(data.getName());
-            existing.setSubject(data.getSubject());
-            return teacherDao.save(existing);
-        });
+        if (!teacherDao.existsById(id)) {
+            return Optional.empty();
+        }
+        if (teacherDao.updateById(id, data) == 0) {
+            return Optional.empty();
+        }
+        return teacherDao.findById(id);
     }
 
     @Transactional
     public boolean deleteById(Long id) {
-        if (!teacherDao.existsById(id)) {
-            return false;
-        }
-        teacherDao.deleteById(id);
-        return true;
+        return teacherDao.deleteById(id) > 0;
     }
 }
