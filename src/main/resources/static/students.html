@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>学生管理</title>
+  <style>
+    body { font-family: Arial, "Microsoft YaHei", sans-serif; margin: 24px; }
+    .container { max-width: 980px; margin: 0 auto; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .nav a { margin-right: 14px; color: #2563eb; text-decoration: none; }
+    .nav a:hover { text-decoration: underline; }
+    .card { border: 1px solid #e5e5e5; border-radius: 12px; padding: 16px; margin-top: 16px; }
+    h1 { margin: 0; font-size: 22px; }
+    .sub { color: #666; margin-top: 6px; }
+    form { margin-top: 12px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .field { display: flex; flex-direction: column; gap: 6px; min-width: 220px; }
+    label { font-size: 14px; color: #333; }
+    input, select { padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+    button { padding: 10px 14px; border-radius: 8px; border: none; background: #2563eb; color: #fff; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    button:disabled { opacity: 0.7; cursor: not-allowed; }
+    .btn-secondary { background: #6b7280; }
+    .btn-secondary:hover { background: #4b5563; }
+    .btn-danger { background: #dc2626; }
+    .btn-danger:hover { background: #b91c1c; }
+    .error { color: #dc2626; margin-top: 10px; min-height: 18px; }
+    .hint { color: #666; font-size: 12px; margin-top: 6px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border-bottom: 1px solid #eee; padding: 10px; text-align: left; }
+    th { color: #444; font-weight: 600; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <div>
+      <h1>学生管理</h1>
+      <div class="sub">新增、编辑、删除学生信息</div>
+    </div>
+    <div class="nav">
+      <a href="/teachers.html">老师</a>
+      <a href="/students.html">学生</a>
+      <a href="/courses.html">课程</a>
+      <a href="/index.html">首页</a>
+      <form action="/logout" method="post" style="display:inline;">
+        <button class="btn-secondary" type="submit">退出登录</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin: 0 0 10px 0; font-size: 16px;">学生信息</h2>
+    <form id="studentForm">
+      <input type="hidden" id="studentId" />
+      <div class="row">
+        <div class="field">
+          <label for="name">姓名</label>
+          <input id="name" name="name" placeholder="例如：张三" required />
+        </div>
+        <div class="field">
+          <label for="age">年龄</label>
+          <input id="age" name="age" type="number" min="1" placeholder="例如：12" required />
+          <div class="hint">会保存到数据库字段：`age`</div>
+        </div>
+      </div>
+      <div style="margin-top: 12px;">
+        <button id="submitBtn" type="submit">新增学生</button>
+      </div>
+      <div class="error" id="errorBox"></div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2 style="margin: 0 0 10px 0; font-size: 16px;">学生列表</h2>
+    <div class="error" id="listErrorBox"></div>
+    <table>
+      <thead>
+      <tr>
+        <th style="width: 90px;">ID</th>
+        <th>姓名</th>
+        <th style="width: 100px;">年龄</th>
+        <th style="width: 210px;">操作</th>
+      </tr>
+      </thead>
+      <tbody id="studentTbody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 style="margin: 0 0 10px 0; font-size: 16px;">学生选课</h2>
+    <div class="hint" id="chooseHint">当前学生：未选择</div>
+
+    <div style="margin-top: 12px;">
+      <div class="row">
+        <div class="field" style="min-width: 340px;">
+          <label for="courseIdSelect">选择课程</label>
+          <select id="courseIdSelect"></select>
+        </div>
+      </div>
+
+      <div style="margin-top: 12px;" class="actions">
+        <button id="chooseBtn" type="button">选课</button>
+        <button id="refreshEnrolledBtn" type="button" class="btn-secondary">刷新已选</button>
+      </div>
+
+      <div class="error" id="chooseErrorBox"></div>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <h3 style="margin: 0 0 10px 0; font-size: 14px;">已选课程</h3>
+      <div class="error" id="enrolledListErrorBox"></div>
+      <table>
+        <thead>
+        <tr>
+          <th style="width: 110px;">课程ID</th>
+          <th>课程名称</th>
+          <th style="width: 220px;">任课老师</th>
+          <th style="width: 140px;">操作</th>
+        </tr>
+        </thead>
+        <tbody id="enrolledCoursesTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="/students.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>登录</title>
+  <style>
+    body { font-family: Arial, "Microsoft YaHei", sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+    .wrap { max-width: 420px; margin: 80px auto; padding: 20px; background: #fff; border-radius: 12px; border: 1px solid #e5e5e5; }
+    h1 { margin: 0 0 16px 0; font-size: 20px; }
+    label { font-size: 14px; color: #333; display: block; margin-top: 12px; margin-bottom: 6px; }
+    input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; }
+    button { width: 100%; margin-top: 18px; padding: 12px; border-radius: 10px; border: none; background: #2563eb; color: #fff; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    .error { color: #dc2626; margin-top: 12px; min-height: 18px; }
+    .hint { color: #666; font-size: 12px; margin-top: 12px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>登录</h1>
+  <form method="post" action="/login">
+    <label for="username">用户名</label>
+    <input id="username" name="username" autocomplete="username" required />
+
+    <label for="password">密码</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required />
+
+    <button type="submit">登录</button>
+  </form>
+
+  <div class="error" id="errorBox"></div>
+  <div class="hint">
+    默认账号：`admin` / `admin123`（如需修改请看后端 `SecurityConfig`）
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("error")) {
+    document.getElementById("errorBox").textContent = "用户名或密码错误";
+  }
+</script>
+</body>
+</html>
+

@@ -1,5 +1,26 @@
+-- Active: 1775154595492@@127.0.0.1@3306@famil
 CREATE TABLE IF NOT EXISTS teacher (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     subject VARCHAR(100)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS student (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS course (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    teacher_id BIGINT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 学生选课：一个学生可以选多门课，一门课也可以被多个学生选
+CREATE TABLE IF NOT EXISTS enrollment (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    course_id BIGINT NOT NULL,
+    UNIQUE KEY uk_student_course (student_id, course_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
