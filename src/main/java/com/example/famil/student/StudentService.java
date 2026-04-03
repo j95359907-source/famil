@@ -24,6 +24,15 @@ public class StudentService {
 
     @Transactional
     public Student create(Student student) {
+        if (student == null) {
+            throw new IllegalArgumentException("学生信息不能为空");
+        }
+        if (student.getName() == null || student.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("学生姓名不能为空");
+        }
+        if (student.getAge() != null && student.getAge() < 0) {
+            throw new IllegalArgumentException("学生年龄不能为负数");
+        }
         student.setId(null);
         return studentDao.insert(student);
     }
