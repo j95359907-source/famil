@@ -27,6 +27,8 @@ public class StudentService {
         if (student == null) {
             throw new IllegalArgumentException("学生信息不能为空");
         }
+
+        
         if (student.getName() == null || student.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("学生姓名不能为空");
         }
